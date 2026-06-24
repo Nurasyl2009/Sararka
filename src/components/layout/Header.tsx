@@ -24,7 +24,7 @@ export default function Header() {
     },
     { href: "/projects", label: t("projects") },
     { href: "/news", label: t("news") },
-    { href: "/analytics", label: t("analytics") },
+
     { href: "/contact", label: t("contact") },
   ];
   const [isOpen, setIsOpen] = useState(false);
@@ -71,8 +71,10 @@ export default function Header() {
             {navLinks.map((link) => (
               <div key={link.href} className="relative">
                 {link.children ? (
-                  <div className="relative">
-                    <button
+                  <div className="relative" onMouseLeave={() => setServicesOpen(false)}>
+                    <Link
+                      href={link.href}
+                      onMouseEnter={() => setServicesOpen(true)}
                       onClick={() => setServicesOpen(!servicesOpen)}
                       className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                         isActive(link.href)
@@ -86,7 +88,7 @@ export default function Header() {
                           servicesOpen ? "rotate-180" : ""
                         }`}
                       />
-                    </button>
+                    </Link>
 
                     {/* Dropdown */}
                     {servicesOpen && (
