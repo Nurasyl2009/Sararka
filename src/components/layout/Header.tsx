@@ -1,29 +1,32 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/routing";
 import { Menu, X, ChevronDown } from "lucide-react";
-
-const navLinks = [
-  { href: "/", label: "Главная" },
-  { href: "/about", label: "О компании" },
-  {
-    href: "/services",
-    label: "Услуги",
-    children: [
-      { href: "/services/engineering-design", label: "Проектирование" },
-      { href: "/services/electrical-installation", label: "Электромонтаж" },
-      { href: "/services/automation", label: "Автоматизация" },
-      { href: "/services/maintenance", label: "Обслуживание" },
-    ],
-  },
-  { href: "/projects", label: "Проекты" },
-  { href: "/news", label: "Новости" },
-  { href: "/contact", label: "Контакты" },
-];
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
+  const t = useTranslations("Header");
+  
+  const navLinks = [
+    { href: "/", label: t("home") },
+    { href: "/about", label: t("about") },
+    {
+      href: "/services",
+      label: t("services"),
+      children: [
+        { href: "/services/engineering-design", label: t("sDesign") },
+        { href: "/services/electrical-installation", label: t("sElectric") },
+        { href: "/services/automation", label: t("sAutomation") },
+        { href: "/services/maintenance", label: t("sMaintenance") },
+      ],
+    },
+    { href: "/projects", label: t("projects") },
+    { href: "/news", label: t("news") },
+    { href: "/analytics", label: t("analytics") },
+    { href: "/contact", label: t("contact") },
+  ];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -71,7 +74,7 @@ export default function Header() {
                   <div className="relative">
                     <button
                       onClick={() => setServicesOpen(!servicesOpen)}
-                      className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                         isActive(link.href)
                           ? "text-blue-400 bg-blue-500/10"
                           : "text-gray-300 hover:text-white hover:bg-white/5"
@@ -108,7 +111,7 @@ export default function Header() {
                 ) : (
                   <Link
                     href={link.href}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 animated-link ${
+                    className={`inline-block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap animated-link ${
                       isActive(link.href)
                         ? "text-blue-400 bg-blue-500/10"
                         : "text-gray-300 hover:text-white hover:bg-white/5"
@@ -121,13 +124,14 @@ export default function Header() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* CTA Button & Language */}
+          <div className="hidden lg:flex items-center gap-4 shrink-0">
+            <LanguageSwitcher />
             <Link
               href="/contact"
-              className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-lg text-sm transition-all duration-200 glow-blue shadow-lg"
+              className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-lg text-sm transition-all duration-200 glow-blue shadow-lg whitespace-nowrap"
             >
-              Связаться с нами
+              {t("request")}
             </Link>
           </div>
 
@@ -172,13 +176,14 @@ export default function Header() {
                 )}
               </div>
             ))}
-            <div className="px-6 pt-4 border-t border-white/10 mt-2">
+            <div className="px-6 pt-4 border-t border-white/10 mt-2 space-y-4">
+              <LanguageSwitcher />
               <Link
                 href="/contact"
                 onClick={() => setIsOpen(false)}
                 className="block w-full text-center px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg text-sm"
               >
-                Связаться с нами
+                {t("request")}
               </Link>
             </div>
           </div>

@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ArrowRight, Play, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const particles = Array.from({ length: 20 }, (_, i) => ({
   id: i,
@@ -15,6 +16,7 @@ const particles = Array.from({ length: 20 }, (_, i) => ({
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations("HeroSection");
 
   useEffect(() => {
     setMounted(true);
@@ -61,7 +63,7 @@ export default function HeroSection() {
               style={{ animation: "fadeUp 0.6s ease-out 0.1s both" }}
             >
               <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-              Ведущая инженерная компания Казахстана
+              {t("badge")}
             </div>
 
             {/* Heading */}
@@ -69,9 +71,9 @@ export default function HeroSection() {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
               style={{ animation: "fadeUp 0.6s ease-out 0.2s both" }}
             >
-              Инженерные{" "}
-              <span className="text-gradient">решения</span>{" "}
-              <br />для вашего бизнеса
+              {t("heading1")}{" "}
+              <span className="text-gradient">{t("heading2")}</span>{" "}
+              <br />{t("heading3")}
             </h1>
 
             {/* Description */}
@@ -79,9 +81,7 @@ export default function HeroSection() {
               className="text-lg text-gray-300 leading-relaxed mb-8 max-w-xl"
               style={{ animation: "fadeUp 0.6s ease-out 0.3s both" }}
             >
-              Проектирование, монтаж и автоматизация инженерных систем любой
-              сложности. Более 15 лет опыта, более 200 реализованных проектов
-              по всему Казахстану.
+              {t("description")}
             </p>
 
             {/* CTA Buttons */}
@@ -93,14 +93,14 @@ export default function HeroSection() {
                 href="/projects"
                 className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-105"
               >
-                Наши проекты
+                {t("ctaProjects")}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/contact"
                 className="flex items-center gap-2 px-7 py-3.5 glass border border-white/20 text-white font-semibold rounded-xl transition-all duration-300 hover:bg-white/10"
               >
-                Получить консультацию
+                {t("ctaConsult")}
               </Link>
             </div>
 
@@ -110,9 +110,9 @@ export default function HeroSection() {
               style={{ animation: "fadeUp 0.6s ease-out 0.5s both" }}
             >
               {[
-                { value: "15+", label: "Лет опыта" },
-                { value: "200+", label: "Проектов" },
-                { value: "50+", label: "Специалистов" },
+                { value: "15+", label: t("statYears") },
+                { value: "200+", label: t("statProjects") },
+                { value: "50+", label: t("statSpecialists") },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold text-gradient mb-1">
@@ -142,10 +142,10 @@ export default function HeroSection() {
                 {/* Diagram elements */}
                 <div className="space-y-4">
                   {[
-                    { label: "Проектирование", value: 92, color: "bg-blue-500" },
-                    { label: "Монтаж", value: 87, color: "bg-cyan-500" },
-                    { label: "Автоматизация", value: 79, color: "bg-indigo-500" },
-                    { label: "Обслуживание", value: 95, color: "bg-blue-400" },
+                    { label: t("diagramDesign"), value: 92, color: "bg-blue-500" },
+                    { label: t("diagramInstall"), value: 87, color: "bg-cyan-500" },
+                    { label: t("diagramAutomation"), value: 79, color: "bg-indigo-500" },
+                    { label: t("diagramMaintenance"), value: 95, color: "bg-blue-400" },
                   ].map((item, i) => (
                     <div key={item.label}>
                       <div className="flex justify-between items-center mb-1">
@@ -180,13 +180,13 @@ export default function HeroSection() {
 
               {/* Floating badges */}
               <div className="absolute -top-4 -right-4 glass-dark rounded-xl px-4 py-3 border border-blue-500/20 shadow-xl">
-                <div className="text-xs text-gray-400">Клиенты довольны</div>
+                <div className="text-xs text-gray-400">{t("badgeClients")}</div>
                 <div className="text-lg font-bold text-gradient">98.5%</div>
               </div>
               <div className="absolute -bottom-4 -left-4 glass-dark rounded-xl px-4 py-3 border border-blue-500/20 shadow-xl">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-xs text-gray-300">Работаем сейчас</span>
+                  <span className="text-xs text-gray-300">{t("badgeWorking")}</span>
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function HeroSection() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400">
-          <span className="text-xs uppercase tracking-widest">Листайте вниз</span>
+          <span className="text-xs uppercase tracking-widest">{t("scrollDown")}</span>
           <ChevronDown className="w-5 h-5 animate-bounce" />
         </div>
       </div>

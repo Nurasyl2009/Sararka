@@ -43,6 +43,7 @@ model Project {
   technologies String[]
   featured     Boolean  @default(false)
   published    Boolean  @default(true)
+  views        Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -90,4 +91,12 @@ model Service {
   updatedAt   DateTime @updatedAt
 
   @@map("services")
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  timestamp DateTime @default(now())
+
+  @@map("page_views")
 }

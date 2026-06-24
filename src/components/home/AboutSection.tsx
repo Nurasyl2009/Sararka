@@ -1,14 +1,18 @@
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { CheckCircle, Award, Users, Globe } from "lucide-react";
-
-const highlights = [
-  { icon: Award, text: "ISO 9001:2015 сертифицирована" },
-  { icon: Users, text: "Более 50 опытных специалистов" },
-  { icon: Globe, text: "Проекты по всему Казахстану" },
-  { icon: CheckCircle, text: "Гарантия качества на все работы" },
-];
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 export default function AboutSection() {
+  const t = useTranslations("AboutSection");
+
+  const highlights = [
+    { icon: Award, text: t("hl1") },
+    { icon: Users, text: t("hl2") },
+    { icon: Globe, text: t("hl3") },
+    { icon: CheckCircle, text: t("hl4") },
+  ];
+
   return (
     <section className="py-24 bg-white">
       <div className="container-custom">
@@ -23,10 +27,10 @@ export default function AboutSection() {
                   <div className="text-center">
                     <div className="text-8xl mb-4">🏗️</div>
                     <div className="text-white/60 text-lg font-medium">
-                      Сарыарқа Инжиниринг
+                      {t("companyName")}
                     </div>
                     <div className="text-blue-400 text-sm mt-1">
-                      Основана в 2009 году
+                      {t("founded")}
                     </div>
                   </div>
                 </div>
@@ -39,7 +43,7 @@ export default function AboutSection() {
               {/* Experience badge */}
               <div className="absolute -bottom-6 -right-6 w-28 h-28 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex flex-col items-center justify-center shadow-2xl shadow-blue-500/30 text-white">
                 <span className="text-3xl font-bold">15+</span>
-                <span className="text-xs text-blue-200 text-center">лет на рынке</span>
+                <span className="text-xs text-blue-200 text-center">{t("yearsExp")}</span>
               </div>
             </div>
           </AnimateIn>
@@ -48,21 +52,17 @@ export default function AboutSection() {
           <AnimateIn direction="right" delay={200}>
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-4 border border-blue-100">
-                О компании
+                {t("badge")}
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-                Надёжный партнёр в{" "}
-                <span className="text-gradient">инженерных решениях</span>
+                {t("title1")}{" "}
+                <span className="text-gradient">{t("title2")}</span>
               </h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                ТОО «Сарыарқа Инжиниринг» — ведущая казахстанская компания,
-                специализирующаяся на проектировании, монтаже и обслуживании
-                инженерных систем с 2009 года.
+                {t("desc1")}
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Наша команда высококвалифицированных специалистов реализует
-                проекты любой сложности в строгом соответствии с международными
-                стандартами качества и требованиями заказчика.
+                {t("desc2")}
               </p>
 
               {/* Highlights */}
@@ -80,13 +80,13 @@ export default function AboutSection() {
                 ))}
               </div>
 
-              <a
+              <Link
                 href="/about"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-navy-900 text-white font-semibold rounded-xl hover:bg-navy-800 transition-colors"
                 style={{ background: "linear-gradient(135deg, #0f2057, #1e40af)" }}
               >
-                Узнать больше о компании
-              </a>
+                {t("btn")}
+              </Link>
             </div>
           </AnimateIn>
         </div>

@@ -1,6 +1,7 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { ArrowRight, Building2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const projects = [
   {
@@ -67,6 +68,9 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function ProjectsSection() {
+  const t = useTranslations("ProjectsSection");
+  const tp = useTranslations("ProjectsData");
+  
   return (
     <section className="py-24 bg-gray-50">
       <div className="container-custom">
@@ -74,11 +78,11 @@ export default function ProjectsSection() {
         <AnimateIn className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-16">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-4 border border-blue-100">
-              Портфолио
+              {t("badge")}
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Последние{" "}
-              <span className="text-gradient">проекты</span>
+              {t("title1")}{" "}
+              <span className="text-gradient">{t("title2")}</span>
             </h2>
           </div>
           <Link
@@ -86,7 +90,7 @@ export default function ProjectsSection() {
             className="flex items-center gap-2 px-6 py-3 border-2 text-sm font-semibold rounded-xl hover:bg-navy-50 transition-all"
             style={{ borderColor: "#0f2057", color: "#0f2057" }}
           >
-            Все проекты
+            {t("allProjects")}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </AnimateIn>
@@ -113,7 +117,7 @@ export default function ProjectsSection() {
                           "bg-white/20 text-white"
                         }`}
                       >
-                        {project.category}
+                        {tp(`${project.id}.category`)}
                       </span>
                     </div>
                     {/* Hover overlay */}
@@ -127,11 +131,11 @@ export default function ProjectsSection() {
                   {/* Content */}
                   <div className="p-5">
                     <h3 className="font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors line-clamp-2">
-                      {project.title}
+                      {tp(`${project.id}.title`)}
                     </h3>
                     <div className="flex items-center justify-between text-sm text-gray-500">
                       <span className="flex items-center gap-1">
-                        📍 {project.location}
+                        📍 {tp(`${project.id}.location`)}
                       </span>
                       <span>{project.year}</span>
                     </div>

@@ -1,24 +1,26 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { ArrowRight } from "lucide-react";
 import { SERVICE_DATA } from "@/types";
+import { useTranslations } from "next-intl";
 
 export default function ServicesSection() {
+  const t = useTranslations("ServicesSection");
+  const ts = useTranslations("ServicesData");
   return (
     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="container-custom">
         {/* Header */}
         <AnimateIn className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-4 border border-blue-100">
-            Наши услуги
+            {t("badge")}
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Полный спектр{" "}
-            <span className="text-gradient">инженерных услуг</span>
+            {t("title1")}{" "}
+            <span className="text-gradient">{t("title2")}</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            От проектирования до обслуживания — мы предоставляем комплексные
-            решения для любых инженерных задач.
+            {t("desc")}
           </p>
         </AnimateIn>
 
@@ -41,30 +43,30 @@ export default function ServicesSection() {
 
                   {/* Title */}
                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">
-                    {service.title}
+                    {ts(`${service.slug}.title`)}
                   </h3>
 
                   {/* Description */}
                   <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                    {service.description}
+                    {ts(`${service.slug}.description`)}
                   </p>
 
                   {/* Features */}
                   <ul className="space-y-2 mb-6">
-                    {service.features.slice(0, 3).map((feature) => (
+                    {[1, 2, 3].map((fNum) => (
                       <li
-                        key={feature}
+                        key={fNum}
                         className="flex items-center gap-2 text-sm text-gray-600"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-                        {feature}
+                        {ts(`${service.slug}.f${fNum}`)}
                       </li>
                     ))}
                   </ul>
 
                   {/* Read More */}
                   <div className="flex items-center gap-2 text-blue-600 font-medium text-sm group-hover:gap-3 transition-all">
-                    Подробнее
+                    {t("readMore")}
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -80,7 +82,7 @@ export default function ServicesSection() {
             className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-navy-800 text-navy-800 font-semibold rounded-xl hover:bg-navy-800 hover:text-white transition-all duration-300"
             style={{ borderColor: "#0f2057", color: "#0f2057" }}
           >
-            Все услуги
+            {t("allServices")}
             <ArrowRight className="w-5 h-5" />
           </Link>
         </AnimateIn>
