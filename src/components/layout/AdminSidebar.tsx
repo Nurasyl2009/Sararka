@@ -15,10 +15,12 @@ import {
   Settings,
   ChevronRight,
   ExternalLink,
+  BarChart3,
 } from "lucide-react";
 
 const sidebarLinks = [
   { href: "/admin", label: "Дашборд", icon: LayoutDashboard, exact: true },
+  { href: "/admin/analytics", label: "Аналитика", icon: BarChart3, exact: false },
   { href: "/admin/projects", label: "Проекты", icon: FolderKanban, exact: false },
   { href: "/admin/news", label: "Новости", icon: FileText, exact: false },
   { href: "/admin/requests", label: "Заявки", icon: MessageSquare, exact: false },

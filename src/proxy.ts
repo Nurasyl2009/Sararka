@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "@/lib/auth";
+import createIntlMiddleware from 'next-intl/middleware';
+import {routing} from './i18n/routing';
+
+const handleI18nRouting = createIntlMiddleware(routing);
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -41,9 +45,20 @@ export function proxy(request: NextRequest) {
     }
   }
 
+
+
+  // Next-intl middleware for public routes
+  if (
+    !pathname.startsWith("/api") && 
+    !pathname.startsWith("/admin") && 
+    !pathname.startsWith("/auth")
+  ) {
+    return handleI18nRouting(request);
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

@@ -4,29 +4,20 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Building2, ArrowLeft, MapPin, Calendar, Tag } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 const projects: Record<string, {
-  id: string; title: string; category: string; location: string; year: string;
-  client: string; duration: string; description: string; challenge: string;
-  solution: string; result: string; technologies: string[]; gradient: string;
+  id: string; categoryKey: string; year: string;
+  technologies: string[]; gradient: string;
 }> = {
   "1": {
-    id: "1", title: "Автоматизация НПЗ «КазМунайГаз»", category: "Автоматизация",
-    location: "Атырау", year: "2023", client: "КазМунайГаз", duration: "14 месяцев",
-    description: "Комплексная автоматизация установок первичной переработки нефти с внедрением современных систем SCADA и ПЛК.",
-    challenge: "Замена устаревшей системы управления без остановки производства с сохранением всех технологических процессов.",
-    solution: "Поэтапная миграция на Siemens SIMATIC S7-1500 с резервированием. Внедрение WinCC OA как SCADA-системы.",
-    result: "Снижение операционных затрат на 23%, повышение надёжности производства до 99.7%, сокращение аварийных ситуаций на 87%.",
+    id: "1", categoryKey: "catAutomation", year: "2023",
     technologies: ["Siemens SCADA", "PLC S7-1500", "WinCC OA", "PROFIBUS", "OPC UA"],
     gradient: "from-blue-900 to-blue-700",
   },
   "2": {
-    id: "2", title: "Электромонтаж ТЦ «Мега»", category: "Электромонтаж",
-    location: "Астана", year: "2023", client: "Mega Group", duration: "8 месяцев",
-    description: "Полный комплекс электромонтажных работ нового торгово-развлекательного центра площадью 120 000 м².",
-    challenge: "Сжатые сроки ввода объекта, параллельное выполнение работ разными подрядчиками, высокие требования к надёжности.",
-    solution: "Детальное планирование, координация всех подрядчиков, применение BIM-модели для монтажа.",
-    result: "Объект сдан в срок с оценкой «отлично» от заказчика. Нарушений в работе системы не зафиксировано.",
+    id: "2", categoryKey: "catElectric", year: "2023",
     technologies: ["ABB", "Schneider Electric", "КЭАЗ", "Legrand", "SEL"],
     gradient: "from-indigo-900 to-purple-700",
   },
@@ -37,9 +28,13 @@ interface Props {
 }
 
 export default async function ProjectDetailPage({ params }: Props) {
-  const { id } = await params;
+  const { id, locale } = await params as unknown as { id: string, locale: string };
   const project = projects[id];
   if (!project) notFound();
+
+  const t = await getTranslations({ locale, namespace: 'ProjectDetail' });
+  const tp = await getTranslations({ locale, namespace: 'ProjectsData' });
+  const tc = await getTranslations({ locale, namespace: 'ProjectsPage' });
 
   return (
     <>
@@ -51,16 +46,16 @@ export default async function ProjectDetailPage({ params }: Props) {
           <div className="container-custom relative z-10">
             <AnimateIn>
               <Link href="/projects" className="inline-flex items-center gap-2 text-blue-300 hover:text-white transition-colors mb-6 text-sm">
-                <ArrowLeft className="w-4 h-4" /> Все проекты
+                <ArrowLeft className="w-4 h-4" /> {t("allProjects")}
               </Link>
               <span className="inline-flex px-3 py-1 bg-white/10 text-white border border-white/20 rounded-full text-sm mb-4">
-                {project.category}
+                {tc(project.categoryKey)}
               </span>
-              <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4">{project.title}</h1>
+              <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4">{tp(`${id}.title`)}</h1>
               <div className="flex flex-wrap gap-5 text-gray-300 text-sm">
-                <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-blue-400" />{project.location}</span>
+                <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-blue-400" />{tp(`${id}.location`)}</span>
                 <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-blue-400" />{project.year}</span>
-                <span className="flex items-center gap-1.5"><Tag className="w-4 h-4 text-blue-400" />Клиент: {project.client}</span>
+                <span className="flex items-center gap-1.5"><Tag className="w-4 h-4 text-blue-400" />{t("client")} {tp(`${id}.client`)}</span>
               </div>
             </AnimateIn>
           </div>
@@ -80,14 +75,14 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </AnimateIn>
 
                 <AnimateIn direction="left">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3">Описание проекта</h2>
-                  <p className="text-gray-600 leading-relaxed">{project.description}</p>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-3">{t("descTitle")}</h2>
+                  <p className="text-gray-600 leading-relaxed">{tp(`${id}.description`)}</p>
                 </AnimateIn>
 
                 {[
-                  { title: "Задача / Проблема", content: project.challenge, icon: "🎯" },
-                  { title: "Решение", content: project.solution, icon: "💡" },
-                  { title: "Результат", content: project.result, icon: "🏆" },
+                  { title: t("task"), content: tp(`${id}.challenge`), icon: "🎯" },
+                  { title: t("solution"), content: tp(`${id}.solution`), icon: "💡" },
+                  { title: t("result"), content: tp(`${id}.result`), icon: "🏆" },
                 ].map((block, i) => (
                   <AnimateIn key={block.title} direction="left" delay={i * 100}>
                     <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
@@ -104,14 +99,14 @@ export default async function ProjectDetailPage({ params }: Props) {
               <AnimateIn direction="right" delay={200} className="lg:col-span-1">
                 <div className="sticky top-28 space-y-6">
                   <div className="rounded-2xl border border-gray-100 p-6">
-                    <h3 className="font-bold text-gray-900 mb-4">Детали проекта</h3>
+                    <h3 className="font-bold text-gray-900 mb-4">{t("details")}</h3>
                     <dl className="space-y-3 text-sm">
                       {[
-                        { label: "Клиент", value: project.client },
-                        { label: "Местоположение", value: project.location },
-                        { label: "Год", value: project.year },
-                        { label: "Продолжительность", value: project.duration },
-                        { label: "Категория", value: project.category },
+                        { label: t("clientLabel"), value: tp(`${id}.client`) },
+                        { label: t("location"), value: tp(`${id}.location`) },
+                        { label: t("year"), value: project.year },
+                        { label: t("duration"), value: tp(`${id}.duration`) },
+                        { label: t("category"), value: tc(project.categoryKey) },
                       ].map((item) => (
                         <div key={item.label} className="flex justify-between items-center py-2 border-b border-gray-50">
                           <dt className="text-gray-500">{item.label}</dt>
@@ -122,7 +117,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                   </div>
 
                   <div className="rounded-2xl border border-gray-100 p-6">
-                    <h3 className="font-bold text-gray-900 mb-4">Технологии</h3>
+                    <h3 className="font-bold text-gray-900 mb-4">{t("tech")}</h3>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech) => (
                         <span key={tech} className="px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-100 rounded-full text-xs font-medium">
@@ -133,10 +128,10 @@ export default async function ProjectDetailPage({ params }: Props) {
                   </div>
 
                   <div className="rounded-2xl p-6 text-white" style={{ background: "linear-gradient(135deg, #0f2057, #1e40af)" }}>
-                    <h3 className="font-bold mb-2">Нужен похожий проект?</h3>
-                    <p className="text-blue-200 text-sm mb-4">Свяжитесь с нами для бесплатной консультации</p>
+                    <h3 className="font-bold mb-2">{t("ctaTitle")}</h3>
+                    <p className="text-blue-200 text-sm mb-4">{t("ctaDesc")}</p>
                     <Link href="/contact" className="block text-center py-2.5 bg-white text-blue-900 font-semibold rounded-xl hover:bg-blue-50 transition-colors text-sm">
-                      Обсудить проект
+                      {t("ctaBtn")}
                     </Link>
                   </div>
                 </div>

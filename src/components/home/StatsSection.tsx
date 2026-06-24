@@ -1,52 +1,19 @@
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { CountUp } from "@/components/ui/CountUp";
-
-const stats = [
-  {
-    value: 15,
-    suffix: "+",
-    label: "Лет на рынке",
-    description: "Профессионального опыта",
-    icon: "📅",
-  },
-  {
-    value: 200,
-    suffix: "+",
-    label: "Реализованных проектов",
-    description: "По всему Казахстану",
-    icon: "🏆",
-  },
-  {
-    value: 50,
-    suffix: "+",
-    label: "Специалистов",
-    description: "В нашей команде",
-    icon: "👥",
-  },
-  {
-    value: 98,
-    suffix: "%",
-    label: "Довольных клиентов",
-    description: "Возвращаются снова",
-    icon: "⭐",
-  },
-  {
-    value: 30,
-    suffix: "+",
-    label: "Городов охвата",
-    description: "По Казахстану",
-    icon: "🌍",
-  },
-  {
-    value: 24,
-    suffix: "/7",
-    label: "Техподдержка",
-    description: "Аварийный выезд",
-    icon: "🛠️",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function StatsSection() {
+  const t = useTranslations("StatsSection");
+
+  const stats = [
+    { value: 15, suffix: "+", label: t("s1l"), description: t("s1d"), icon: "📅" },
+    { value: 200, suffix: "+", label: t("s2l"), description: t("s2d"), icon: "🏆" },
+    { value: 50, suffix: "+", label: t("s3l"), description: t("s3d"), icon: "👥" },
+    { value: 98, suffix: "%", label: t("s4l"), description: t("s4d"), icon: "⭐" },
+    { value: 30, suffix: "+", label: t("s5l"), description: t("s5d"), icon: "🌍" },
+    { value: 24, suffix: "/7", label: t("s6l"), description: t("s6d"), icon: "🛠️" },
+  ];
+
   return (
     <section className="py-24 bg-gradient-to-br from-navy-900 via-navy-800 to-primary-900 relative overflow-hidden"
       style={{ background: "linear-gradient(135deg, #060d20 0%, #0f2057 60%, #1e3a8a 100%)" }}
@@ -58,15 +25,14 @@ export default function StatsSection() {
         {/* Header */}
         <AnimateIn className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-blue-500/30 text-blue-300 text-sm font-medium mb-4">
-            Наши достижения
+            {t("badge")}
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Цифры говорят{" "}
-            <span className="text-gradient">сами за себя</span>
+            {t("title1")}{" "}
+            <span className="text-gradient">{t("title2")}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            За годы работы мы завоевали доверие сотен клиентов
-            и реализовали сотни успешных проектов.
+            {t("desc")}
           </p>
         </AnimateIn>
 

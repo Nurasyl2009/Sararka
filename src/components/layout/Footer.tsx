@@ -1,36 +1,39 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import { Mail, Phone, MapPin, Clock, Share2, AtSign, Briefcase, Play } from "lucide-react";
 
-const services = [
-  { label: "Проектирование систем", href: "/services/engineering-design" },
-  { label: "Электромонтажные работы", href: "/services/electrical-installation" },
-  { label: "Автоматизация объектов", href: "/services/automation" },
-  { label: "Техническое обслуживание", href: "/services/maintenance" },
-];
-
-const quickLinks = [
-  { label: "О компании", href: "/about" },
-  { label: "Наши проекты", href: "/projects" },
-  { label: "Новости", href: "/news" },
-  { label: "Контакты", href: "/contact" },
-  { label: "Административная панель", href: "/admin" },
-];
-
-const contacts = [
-  { icon: Phone, text: "+7 (717) 200-00-00", href: "tel:+77172000000" },
-  { icon: Mail, text: "info@saryarka-eng.kz", href: "mailto:info@saryarka-eng.kz" },
-  { icon: MapPin, text: "г. Астана, ул. Кабанбай батыра, 53", href: "#" },
-  { icon: Clock, text: "Пн-Пт: 9:00 — 18:00", href: "#" },
-];
-
-const socials = [
-  { icon: Share2, href: "#", label: "Facebook" },
-  { icon: AtSign, href: "#", label: "Instagram" },
-  { icon: Briefcase, href: "#", label: "LinkedIn" },
-  { icon: Play, href: "#", label: "YouTube" },
-];
-
 export default function Footer() {
+  const t = useTranslations("Footer");
+
+  const services = [
+    { label: t("s1"), href: "/services/engineering-design" },
+    { label: t("s2"), href: "/services/electrical-installation" },
+    { label: t("s3"), href: "/services/automation" },
+    { label: t("s4"), href: "/services/maintenance" },
+  ];
+
+  const quickLinks = [
+    { label: t("l1"), href: "/about" },
+    { label: t("l2"), href: "/projects" },
+    { label: t("l3"), href: "/news" },
+    { label: t("l4"), href: "/contact" },
+    { label: t("l5"), href: "/admin" },
+  ];
+
+  const contacts = [
+    { icon: Phone, text: "+7 (717) 200-00-00", href: "tel:+77172000000" },
+    { icon: Mail, text: "info@saryarka-eng.kz", href: "mailto:info@saryarka-eng.kz" },
+    { icon: MapPin, text: t("address"), href: "#" },
+    { icon: Clock, text: t("hours"), href: "#" },
+  ];
+
+  const socials = [
+    { icon: Share2, href: "#", label: "Facebook" },
+    { icon: AtSign, href: "#", label: "Instagram" },
+    { icon: Briefcase, href: "#", label: "LinkedIn" },
+    { icon: Play, href: "#", label: "YouTube" },
+  ];
+
   return (
     <footer className="bg-gradient-to-b from-navy-900 to-navy-950 text-white"
       style={{ background: "linear-gradient(to bottom, #0a1535, #060d20)" }}>
@@ -49,8 +52,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Профессиональные инженерные решения для промышленных и гражданских объектов.
-              Более 15 лет опыта на рынке Казахстана.
+              {t("description")}
             </p>
             <div className="flex items-center gap-3">
               {socials.map((social) => (
@@ -68,7 +70,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Услуги</h3>
+            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">{t("servicesTitle")}</h3>
             <ul className="space-y-3">
               {services.map((item) => (
                 <li key={item.href}>
@@ -85,7 +87,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Навигация</h3>
+            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">{t("links")}</h3>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
                 <li key={item.href}>
@@ -102,7 +104,7 @@ export default function Footer() {
 
           {/* Contacts */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Контакты</h3>
+            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">{t("contacts")}</h3>
             <ul className="space-y-4">
               {contacts.map((contact, index) => (
                 <li key={index}>
@@ -124,11 +126,11 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Сарыарқа Инжиниринг. Все права защищены.
+            © {new Date().getFullYear()} Сарыарқа Инжиниринг. {t("rights")}
           </p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-gray-300 transition-colors">Политика конфиденциальности</a>
-            <a href="#" className="hover:text-gray-300 transition-colors">Пользовательское соглашение</a>
+            <a href="#" className="hover:text-gray-300 transition-colors">{t("privacy")}</a>
+            <a href="#" className="hover:text-gray-300 transition-colors">{t("terms")}</a>
           </div>
         </div>
       </div>
