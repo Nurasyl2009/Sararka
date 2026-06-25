@@ -4,14 +4,19 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Seeding database...");
+  console.log("Checking database...");
 
-  // Delete existing data to prevent duplicates
-  await prisma.contactRequest.deleteMany();
-  await prisma.news.deleteMany();
-  await prisma.project.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.service.deleteMany();
+  // Only seed if no admin user exists (first deploy)
+  const existingAdmin = await prisma.user.findFirst({
+    where: { role: "ADMIN" },
+  });
+
+  if (existingAdmin) {
+    console.log("Admin user already exists, skipping seed.");
+    return;
+  }
+
+  console.log("No admin user found. Seeding database...");
 
   // Create admin user
   const adminPassword = await bcrypt.hash("admin123", 12);
