@@ -14,7 +14,7 @@ services:
           name: saryarka-db
           property: connectionString
       - key: JWT_SECRET
-        generateValue: true
+        sync: false
       - key: NODE_ENV
         value: production
       - key: PORT

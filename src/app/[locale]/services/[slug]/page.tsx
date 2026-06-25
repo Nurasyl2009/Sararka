@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AnimateIn } from "@/components/ui/AnimateIn";
@@ -9,7 +9,7 @@ import { CheckCircle, ArrowLeft, ArrowRight, Phone } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale?: string }>;
 }
 
 export async function generateStaticParams() {
@@ -17,10 +17,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = await params as unknown as { slug: string, locale: string };
+  const { slug } = await params;
   const service = SERVICE_DATA.find((s) => s.slug === slug);
-  const t = await getTranslations({ locale, namespace: 'ServiceDetail' });
-  const ts = await getTranslations({ locale, namespace: 'ServicesData' });
+  const t = await getTranslations('ServiceDetail');
+  const ts = await getTranslations('ServicesData');
 
   if (!service) return { title: t("notFound") };
   return {
@@ -30,13 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
-  const { slug, locale } = await params as unknown as { slug: string, locale: string };
+  const { slug } = await params;
   const service = SERVICE_DATA.find((s) => s.slug === slug);
   if (!service) notFound();
 
   const otherServices = SERVICE_DATA.filter((s) => s.slug !== slug);
-  const t = await getTranslations({ locale, namespace: 'ServiceDetail' });
-  const ts = await getTranslations({ locale, namespace: 'ServicesData' });
+  const t = await getTranslations('ServiceDetail');
+  const ts = await getTranslations('ServicesData');
 
   return (
     <>
