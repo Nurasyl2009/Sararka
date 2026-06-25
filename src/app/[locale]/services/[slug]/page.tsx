@@ -6,10 +6,10 @@ import Footer from "@/components/layout/Footer";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SERVICE_DATA } from "@/types";
 import { CheckCircle, ArrowLeft, ArrowRight, Phone } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 interface Props {
-  params: Promise<{ slug: string; locale?: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export async function generateStaticParams() {
@@ -17,7 +17,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+
   const service = SERVICE_DATA.find((s) => s.slug === slug);
   const t = await getTranslations('ServiceDetail');
   const ts = await getTranslations('ServicesData');
@@ -30,7 +32,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+
   const service = SERVICE_DATA.find((s) => s.slug === slug);
   if (!service) notFound();
 
