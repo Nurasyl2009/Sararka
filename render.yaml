@@ -7,7 +7,7 @@ services:
     runtime: node
     plan: free
     buildCommand: npm install && npm run build
-    startCommand: node .next/standalone/server.js
+    startCommand: npm run start
     envVars:
       - key: DATABASE_URL
         fromDatabase:
